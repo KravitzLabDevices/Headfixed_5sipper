@@ -23,7 +23,7 @@ Adafruit_seesaw ss;
 #define BUTTON_C 5
 
 //user specified volume in uL
-int volume = 1000;
+int volume = 2;
 
 //starting from the first trial
 int Trial = 1;
@@ -55,6 +55,7 @@ void setup() {
   pinMode(BUTTON_A, INPUT_PULLUP);
   pinMode(BUTTON_B, INPUT_PULLUP);
   pinMode(BUTTON_C, INPUT_PULLUP);
+  pinMode(A0, OUTPUT);
   pinMode(A1, OUTPUT);
   pinMode(A2, OUTPUT);
   pinMode(A3, OUTPUT);
@@ -97,53 +98,18 @@ void setup() {
 
 void loop() {
 
-  dispense(0);
-  dispense(1);
-  dispense(2);
-  dispense(3);
-  dispense(4);
+  int randomNumber = random(5);
+  position(randomNumber);
+  noise();
+  customDelay(5000);
+  timeout(20, 30);
 
-  // position(0);
-  //
-  //
-  //  position(0);
-  //  delay(500);
-  //  dispense(0);
-  //  delay(20000);
-  //
-  //  position(1);
-  //  delay(500);
-  //  dispense(1);
-  //  delay(20000);
-  //
-  //  position(2);
-  //  delay(500);
-  //  dispense(2);
-  //  delay(20000);
-  //
-  //  position(3);
-  //  delay(500);
-  //  dispense(3);
-  //  delay(20000);
-  //
-  //  position(4);
-  //  delay(500);
-  //  dispense(4);
-  //  delay(20000);
-  //
-//
-//  int randomNumber = random(5);
-//  position(randomNumber);
-//  noise();
-//  delay(5000);
-//  timeout(20, 30);
-//
-//  randomNumber = random(5);
-//  position(randomNumber);
-//  playTone(2000, 1000);
-//  dispense(randomNumber);
-//  delay(10000);
-//  retract();
-//  timeout(20, 30); //change this when you want to flush the solenoid after recording
+  randomNumber = random(5);
+  position(randomNumber);
+  playTone(2000, 1000);
+  dispense(randomNumber);
+  customDelay(10000);
+  retract();
+  timeout(20, 30); //change this when you want to flush the solenoid after recording
 
 }

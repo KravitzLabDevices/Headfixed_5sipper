@@ -20,6 +20,7 @@ void UpdateDisplay() {
   display.println(encoderPosition);
   display.print("Velocity: ");
   display.println(velocity);
+  //analogWrite (A1, velocity * 10); // write our velocity to Bonsai through pin A1
   display.print("Offset: ");
   display.println(offset);
   display.print("Timeout: ");
