@@ -8,26 +8,24 @@
    @param duration The duration of the tone in milliseconds.
 */
 void playTone(int frequency, int duration) {
-  // Print status message to Serial
-  Serial.println("Playing tone");
 
   // Play tone using specified frequency and duration
   tone(12, frequency, duration);
 
-  // Send output to Bonsai via digital pin 7
-  digitalWrite(7, HIGH);
+  // Send output to Bonsai via digital pin 13
+  digitalWrite(13, HIGH);
 
   // Delay for duration of tone
   delay(duration);
 
   // Turn off output to Bonsai
-  digitalWrite(7, LOW);
+  digitalWrite(13, LOW);
 
   // Update the OLED display
   UpdateDisplay();
 
   // Delay before next action
-  delay(3900);
+  customDelay(3900);
 }
 
 
@@ -46,7 +44,7 @@ void noise() {
     // Generate a random frequency between 20 Hz and 200 Hz and play it through pin 12
     tone(12, random(20, 200), 20);
     // Wait for 20 ms before playing the next tone
-    delay(20);
+    customDelay(20);
     // Update the display to show any changes
     UpdateDisplay();
   }

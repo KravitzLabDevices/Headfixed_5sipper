@@ -8,19 +8,13 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH110X.h>
-#include <Adafruit_seesaw.h>
-
-int32_t encoder_position;
-
-// OLED display object
-Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);
-
-// Seesaw object
-Adafruit_seesaw ss;
 
 #define BUTTON_A 9
 #define BUTTON_B 6
 #define BUTTON_C 5
+
+// OLED display object
+Adafruit_SH1107 display = Adafruit_SH1107(64, 128, &Wire);
 
 //user specified volume in uL
 int volume = 2;
@@ -32,22 +26,18 @@ Servo servo_retract;  // create servo object to control a servo
 Servo servo_rotate;   // create servo object to control a servo
 // twelve servo objects can be created on most boards
 
-
 int pos = 0;  // variable to store the servo position
+int target = 0; //variable to store the target position for spout rotation
 
-//servo position offet and step
-int step = 40;
+//servo position offset
 int offset = 0;
 unsigned long timer = 0;
 
-int pos1 = 0;
+//initialize variable for randomizing spout position
+int selection = 0;
+
 int random_delay = 0;
 unsigned long startTimeout = millis();
-int16_t prevPosition = 0;
-unsigned long prevTime = 0;
-float timeDifference = 0;
-float velocity = 0;
-float distance = 0;
 
 void setup() {
   servo_retract.attach(11);  // attaches the servo on pin 11 to the servo object
@@ -61,12 +51,10 @@ void setup() {
   pinMode(A3, OUTPUT);
   pinMode(A4, OUTPUT);
   pinMode(A5, OUTPUT);
+  //pinMode(D4, OUTPUT);
 
   // Start the I2C communication
   Wire.begin();
-
-  //initial seesaw module
-  ss.begin(0x36);
 
   // Initialize the OLED display
   Serial.begin(115200);
@@ -78,16 +66,8 @@ void setup() {
   display.setTextSize(1);
   display.display();
 
-
-  // Enable the rotary encoder
-  int encoder_position = ss.getEncoderPosition();
-  UpdateDisplay();
-
-  // Seed the random number generator using noise from an unconnected analog pin
-  randomSeed(analogRead(A0));
-
-  // set servo to position 0
-  position (0);
+  // set spout to position 0
+  spoutPosition(0);
 
   // use buttons to set offset
   timer = millis();
@@ -98,18 +78,20 @@ void setup() {
 
 void loop() {
 
-  int randomNumber = random(5);
-  position(randomNumber);
+  UpdateDisplay();
+  selection = positionShuffle();
+  spoutPosition(selection);
   noise();
-  customDelay(5000);
-  timeout(20, 30);
+  //customDelay(5000);
+  timeout(2, 33);
 
-  randomNumber = random(5);
-  position(randomNumber);
+  UpdateDisplay();
+  selection = positionShuffle();
+  spoutPosition(selection);
   playTone(2000, 1000);
-  dispense(randomNumber);
-  customDelay(10000);
+  dispense(selection);
+  //customDelay(10000);
   retract();
-  timeout(20, 30); //change this when you want to flush the solenoid after recording
+  timeout(2, 3); 
 
 }

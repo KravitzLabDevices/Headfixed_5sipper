@@ -6,6 +6,7 @@ void retract() {
     delay(15);                  // waits 15ms for the servo to reach the position
   }
   servo_retract.detach();  // attaches the servo on pin 9 to the servo object
+  UpdateDisplay();
 }
 
 void extend() {
@@ -23,4 +24,5 @@ void extend() {
     delay(100);                          // waits 15ms for the servo to reach the position
   }
   servo_retract.detach();  // attaches the servo on pin 9 to the servo object
+  UpdateDisplay();
 }

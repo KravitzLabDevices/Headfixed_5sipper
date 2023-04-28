@@ -11,40 +11,38 @@
   """
 */
 
-void position(int num) {
+void spoutPosition(int num) {
   retract();
-  //int position = (num * step) + offset;
 
-  int position = 0;
-  if (num == 0) {
-    position = 0 + offset;
+  if (num == 1) {
+    target = 0 + offset;
     analogWrite (A0, 0);
   }
-  if (num == 1) {
-    position = 37 + offset;
+  if (num == 2) {
+    target = 37 + offset;
     analogWrite (A0, 250);
   }
-  if (num == 2) {
-    position = 74 + offset;
+  if (num == 3) {
+    target = 74 + offset;
     analogWrite (A0, 500);
   }
-  if (num == 3) {
-    position = 117 + offset;
+  if (num == 4) {
+    target = 117 + offset;
     analogWrite (A0, 750);
   }
-  if (num == 4) {
-    position = 160 + offset;
+  if (num == 5) {
+    target = 160 + offset;
     analogWrite (A0, 1000);
   }
 
   servo_rotate.attach(10);  // attach servo to pin
-  if (servo_rotate.read() > position) {
-    for (int pos = servo_rotate.read(); pos >= position; pos -= 1) {
+  if (servo_rotate.read() > target) {
+    for (pos = servo_rotate.read(); pos >= target; pos -= 1) {
       servo_rotate.write(pos);  // move servo to new position
       delay(20);                // wait for servo to move
     }
   } else {
-    for (int pos = servo_rotate.read(); pos <= position; pos += 1) {
+    for (pos = servo_rotate.read(); pos <= target; pos += 1) {
       servo_rotate.write(pos);  // move servo to new position
       delay(20);                // wait for servo to move
     }

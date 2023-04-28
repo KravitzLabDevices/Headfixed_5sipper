@@ -3,6 +3,5 @@ void customDelay(int milliseconds) {
   while (millis() - startTime < milliseconds) {
     // do nothing and wait for the specified time
   }
-  display.display(); //update the OLED display even during delays
-  analogWrite (A1, velocity * 10); // write our velocity to Bonsai through pin A1
+  UpdateDisplay(); //update the OLED display even during delays
 }
